@@ -1,0 +1,167 @@
+Tutorial I followed: https://youtu.be/Mv6c_9FqNx4
+
+commands for websockets
+
+To connect: 
+wscat -c wscat -c wss://stream.data.alpaca.markets/v1beta2/crypto
+
+Successful connection response:
+{'T': 'success', 'msg': 'connected'}
+
+To Authenticate:
+{"action": "auth", "key": "PK7LUG4Z7L6A2MZ4K5TA", "secret": "XEp19Ob3SinTuVdv9GjKHIY2Pdu6BccNQlu0ZatH"}
+
+Successful authentication response:
+{'T': 'success', 'msg': 'authenticated'}
+
+
+To subscribe:
+{"action":"subscribe","trades":["BTC/USD"],"quotes":["LTC/USD","ETH/USD"],"bars":["BCH/USD"]}
+
+
+Example trade:
+< [{"T":"t",                                TYPE
+    "S":"BTC/USD",                          SYMBOL
+    "p":24026,                              TRADE PRICE
+    "s":0.1,                                TRADE SIZE           
+    "t":"2022-08-17T01:25:08.051548Z",      TIME
+    "i":39472000,                           TRADE ID
+    "tks":"B"}]                             
+
+Example bar:
+< [{"T":"b",                                TYPE
+    "S":"BTC/USD",                          SYMBOL
+    "o":23989,                              OPEN PRICE
+    "h":23989,                              HIGH PRICE
+    "l":23989,                              LOW PRICE
+    "c":23989,                              CLOSE PRICE
+    "v":0.2125,                             VOLUME
+    "t":"2022-08-17T01:21:00Z",             TIME
+    "n":4,                                  
+    "vw":23989}]
+
+Example quote:
+    [{"T":"q",                              TYPE
+    "S":"BTC/USD",                          SYMBOL
+    "bp":23919,                             BID PRICE
+    "bs":0.6867,                            BID SIZE
+    "ap":23920,                             ASK PRICE
+    "as":4.7633,                            ASK SIZE
+    "t":"2022-08-17T02:07:03.637337856Z"}]  TIME
+
+
+Example Order:
+Order({   'asset_class': 'crypto',
+    'asset_id': '276e2673-764b-4ab6-a611-caf665ca6340',
+    'canceled_at': None,
+    'client_order_id': 'current order123',
+    'created_at': '2022-08-17T12:37:55.32977Z',
+    'expired_at': None,
+    'extended_hours': False,
+    'failed_at': None,
+    'filled_at': '2022-08-17T12:37:55.372031573Z',
+    'filled_avg_price': '23658',
+    'filled_qty': '1',
+    'hwm': None,
+    'id': 'c5fd9345-62f4-4786-9168-ebfc075a7a6b',
+    'legs': None,
+    'limit_price': None,
+    'notional': None,
+    'order_class': '',
+    'order_type': 'market',
+    'qty': '1',
+    'replaced_at': None,
+    'replaced_by': None,
+    'replaces': None,
+    'side': 'buy',
+    'source': None,
+    'status': 'filled',
+    'stop_price': None,
+    'submitted_at': '2022-08-17T12:37:55.32790603Z',
+    'subtag': None,
+    'symbol': 'BTC/USD',
+    'time_in_force': 'gtc',
+    'trail_percent': None,
+    'trail_price': None,
+    'type': 'market',
+    'updated_at': '2022-08-17T12:37:55.375500846Z'})
+
+Example Position:
+Position({   'asset_class': 'crypto',
+    'asset_id': '64bbff51-59d6-4b3c-9351-13ad85e3c752',
+    'asset_marginable': False,
+    'avg_entry_price': '23710',
+    'change_today': '-0.0097695390781563',
+    'cost_basis': '23650.725',
+    'current_price': '23718',
+    'exchange': 'FTXU',
+    'lastday_price': '23952',
+    'market_value': '23658.705',
+    'qty': '0.9975',
+    'qty_available': '0.9975',
+    'side': 'long',
+    'symbol': 'BTCUSD',
+    'unrealized_intraday_pl': '7.98',
+    'unrealized_intraday_plpc': '0.000337410375369',
+    'unrealized_pl': '7.98',
+    'unrealized_plpc': '0.000337410375369'})
+
+
+How I want the simple altogrithm to actually work:
+
+99,875.16 equity
+199,749.32 Buying Power
+
+$99,852.32 Equity
+$180,726.97
+
+---------------------
+Things I want to change for second itteration
+
+- give the bot a symbol to trade with **DONE**
+- give the run method an amount to trade **DONE**
+
+- delete the websocket part because we don't need it anymore **DONE**
+
+- calculate the percent change with the crypto price ??? ALREADY AM
+
+- try to make methods for everything the api does in order to 
+switch to a new api in the future
+
+- be able to check wether or not you have a position in that symbol 
+and if you do dont make a trade **DONE**
+
+- print out your account and positions when the bot starts 
+
+- still a slight bug where you automatically lose money when you make
+a trade not sure if thats just alpaca or what
+
+- want the bot to have a state thats either buy or sell so it can 
+determine if it already has some of a cryto or not and if it does it
+will look for a time to sell 
+
+- learn about moving averages and implement more logic to the trades
+    - like waiting for a downtrend followed by a doji
+    - or something with moving averages
+
+
+
+-exception catching
+
+// sidebar: use CoinAPI later for data (supposed to be the best)
+// and look into Gemini and Kraken apis for trading
+
+example get crytpo bars df 
+- timestamp is in utc time 
+                          exchange      open      high       low     close     volume  trade_count          vwap
+timestamp
+2022-09-16 03:19:00+00:00     CBSE  19703.63  19710.93  19700.85  19703.44   3.536027          241  19702.983234
+2022-09-16 03:20:00+00:00     CBSE  19703.43  19721.73  19697.10  19719.82  11.007589          299  19710.354188
+2022-09-16 03:21:00+00:00     CBSE  19719.82  19728.55  19717.47  19725.69   8.876510          274  19723.983115
+2022-09-16 03:22:00+00:00     CBSE  19722.63  19725.70  19712.43  19716.02   3.016689          222  19717.828393
+2022-09-16 03:23:00+00:00     CBSE  19716.02  19716.43  19703.56  19705.67   2.895849          237  19710.596862
+2022-09-16 03:24:00+00:00     CBSE  19705.67  19719.08  19704.89  19709.29  19.177552          228  19714.807311
+2022-09-16 03:25:00+00:00     CBSE  19709.30  19719.16  19707.08  19718.41   4.138591          260  19713.996292
+2022-09-16 03:26:00+00:00     CBSE  19718.41  19730.09  19712.28  19729.46   3.833498          257  19717.736299
+2022-09-16 03:27:00+00:00     CBSE  19729.41  19739.35  19722.15  19739.13   6.514439          294  19731.258099
+2022-09-16 03:28:00+00:00     CBSE  19740.20  19749.79  19739.27  19745.25   1.348631          218  19744.213671
