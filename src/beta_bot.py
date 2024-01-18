@@ -2,8 +2,8 @@ from alpaca.trading.client import TradingClient
 from alpaca.trading.requests import GetAssetsRequest
 from alpaca.trading.enums import AssetClass
 
-from config import API_KEY
-from config import API_SECRET
+from config.config import API_KEY
+from config.config import API_SECRET
 
 trading_client = TradingClient(API_KEY, API_SECRET, paper=True)
 
@@ -28,4 +28,5 @@ search_params = GetAssetsRequest(asset_class=AssetClass.US_EQUITY)
 aapl_asset = trading_client.get_asset('AAPL')
 
 if aapl_asset.tradable:
-    print('We can trade AAPL.')
+    #print('We can trade AAPL.')
+    pass
