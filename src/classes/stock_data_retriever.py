@@ -3,6 +3,7 @@ from alpaca.data.requests import StockBarsRequest
 from alpaca.data.timeframe import TimeFrame
 from alpaca.data.requests import StockLatestQuoteRequest
 from datetime import datetime
+from dateutil.relativedelta import relativedelta
 import pandas as pd
 
 class StockDataRetriever:
@@ -19,13 +20,15 @@ class StockDataRetriever:
         return ask_price
 
 
-    def get_dataframe(self, symbol: str, years_back: int = 3) -> pd.DataFrame:
+    def get_dataframe(self, symbol: str, months_back: int = 12) -> pd.DataFrame:
         client = StockHistoricalDataClient(self.api_key, self.api_secret)
+
         now = datetime.now()
+        new_date = now - relativedelta(months = months_back)
         request = StockBarsRequest(
             symbol_or_symbols=symbol,
             timeframe= TimeFrame.Day,
-            start=datetime((now.year-years_back), now.month, now.day)
+            start=new_date
         )
         bars = client.get_stock_bars(request_params=request)
         return bars.df

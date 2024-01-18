@@ -1,5 +1,5 @@
 import pandas as pd
-import matplotlib as plt
+import matplotlib.pyplot as plt
 #from config.config import API_SECRET as secret
 
 # Assuming df is your DataFrame
@@ -7,8 +7,8 @@ import matplotlib as plt
 
 class Grapher:
 
-    def __init__(self, df):
-        self.df = df
+    def __init__(self, stock_df):
+        self.df = stock_df
 
     def graph(self):
 
@@ -28,8 +28,9 @@ class Grapher:
         plt.legend()
 
         # Rotating x-axis labels for better readability
-        plt.xticks(rotation=45, ha='right')
+        plt.xticks(rotation=70)
 
         # Display the plot
         plt.tight_layout()  # Adjust layout to prevent clipping of labels
         plt.show()
+
