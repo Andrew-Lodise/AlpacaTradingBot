@@ -7,7 +7,7 @@ def main():
 
     sdr = StockDataRetriever(api_key=key, api_secret=secret)
     g = Grapher(sdr.get_dataframe("AAPL"))
-    g.graph()
+    #g.graph()
     
     #StockDataRetrieverTests
     #print(sdr.get_dataframe("AAPL")) #✔
