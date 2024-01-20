@@ -6,16 +6,20 @@ from classes.grapher import Grapher
 def main():
 
     sdr = StockDataRetriever(api_key=key, api_secret=secret)
-    g = Grapher(sdr.get_dataframe(symbol="SPY", months_back=1))
-    g.graph()
-
-    #Grapher tests
-    #g.graph(()) #✔
+    
 
     #StockDataRetriever tests
+    df = sdr.get_dataframe(symbol="SPY", months_back=3)    
+    df['MA'] = df['close'].rolling(window=5).mean()
+    #print(df)
     #print(sdr.get_dataframe(symbol="SPY", months_back=6)) #✔
     #print(sdr.get_latest_price("AAPL")) #✔
 
+    #Grapher tests
+    g = Grapher(df)
+    #g.graph_stock_close()
+    g.graph() #✔
+    
 
 if __name__ == "__main__":
     main()

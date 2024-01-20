@@ -9,19 +9,26 @@ class Grapher:
 
     def __init__(self, stock_df):
         self.df = stock_df
+        self.add_ma_col()
+
+    
+    def add_ma_col(self):
+        self.df['MA'] = self.df['close'].rolling(window=5).mean()
+
 
     def graph(self):
 
-        df_reset = self.df.reset_index()
+        data = self.df.reset_index()
 
         # Plotting the DataFrame
-        plt.figure(figsize=(10, 6))  # Adjust the figure size as needed
-        for symbol, data in df_reset.groupby('symbol'):
-            plt.plot(data['timestamp'], data['close'], label=symbol)
+        plt.figure(figsize=(10, 6))  
 
-        # Adding labels and title
+        plt.plot(data['timestamp'], data['close'], color="blue", label="Closing Price", linewidth=5)
+        plt.plot(data['timestamp'], data['MA'], color = "red", label= "5-day Moving Average", linewidth=2)
+
+        #labels and title
         plt.xlabel('Timestamp')
-        plt.ylabel('Close Price')
+        plt.ylabel('price')
         plt.title('Stock Prices Over Time')
 
         # Adding legend
