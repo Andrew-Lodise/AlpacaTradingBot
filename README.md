@@ -1,4 +1,4 @@
 # Summary
     fill in later
 # Installation guide
-    fill in later
+    pip install -r requirements.txt
