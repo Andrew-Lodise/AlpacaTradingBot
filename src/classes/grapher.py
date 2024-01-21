@@ -1,5 +1,6 @@
 import pandas as pd
 import matplotlib.pyplot as plt
+import numpy as np
 #from config.config import API_SECRET as secret
 
 # Assuming df is your DataFrame
@@ -9,12 +10,6 @@ class Grapher:
 
     def __init__(self, stock_df):
         self.df = stock_df
-        self.add_ma_col()
-
-    
-    def add_ma_col(self):
-        self.df['MA'] = self.df['close'].rolling(window=5).mean()
-
 
     def graph(self):
 
@@ -28,14 +23,17 @@ class Grapher:
 
         #labels and title
         plt.xlabel('Timestamp')
-        plt.ylabel('price')
-        plt.title('Stock Prices Over Time')
+        plt.ylabel('Price (USD$)')
+        plt.title(f'({self.df.index[0][0]}) Stock Prices Over Time')
 
         # Adding legend
         plt.legend()
 
+        # Adding grid
+        plt.grid()
+
         # Rotating x-axis labels for better readability
-        plt.xticks(rotation=70)
+        plt.xticks(rotation=90)
 
         # Display the plot
         plt.tight_layout()  # Adjust layout to prevent clipping of labels

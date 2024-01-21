@@ -31,7 +31,12 @@ class StockDataRetriever:
             start=new_date
         )
         bars = client.get_stock_bars(request_params=request)
-        return bars.df
+        df = bars.df
+
+        # adding moving average, move somewhere else later
+        df['MA'] = df['close'].rolling(window=5).mean()
+        
+        return df
 
     #print(get_dataframe(API_KEY, API_SECRET, "AAPL")) #works
 

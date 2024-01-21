@@ -9,9 +9,7 @@ def main():
     
 
     #StockDataRetriever tests
-    df = sdr.get_dataframe(symbol="SPY", months_back=3)    
-    df['MA'] = df['close'].rolling(window=5).mean()
-    #print(df)
+    df = sdr.get_dataframe(symbol="AAPL", months_back=3)    
     #print(sdr.get_dataframe(symbol="SPY", months_back=6)) #✔
     #print(sdr.get_latest_price("AAPL")) #✔
 
